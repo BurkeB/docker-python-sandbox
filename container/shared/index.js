@@ -22,9 +22,19 @@ app.post('/', function (req, res) {
   	    res.status(200);
     
   		// Write code to file
-  		fs.writeFileSync('./code.py', req.body.code);
-  		
-  		var job = child_process.spawn("python", ["-u", "./code.py"], { cwd: __dirname })
+		
+		var job = null;
+		console.log("Executing "+ req.body.language +" Code");
+		switch(req.body.language){
+			case "javascript": 
+		  		fs.writeFileSync('./code.js', req.body.code);
+				job = child_process.spawn("node", ["-u", "./code.js"], { cwd: __dirname });
+				break; 
+			default: 
+		  		fs.writeFileSync('./code.py', req.body.code);
+				job = child_process.spawn("python", ["-u", "./code.py"], { cwd: __dirname });
+		}
+
   		var output = {stdout: '', stderr: '', combined: ''};
   		
   		job.stdout.on('data', function (data) {

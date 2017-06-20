@@ -1,5 +1,5 @@
 #!/bin/bash
-IMAGE_NAME="docker-python-sandbox-image"
+IMAGE_NAME="lernmeister/python2-sandbox"
 
 if [ $# = 1 ]; then
 	IMAGE_NAME="$1"
